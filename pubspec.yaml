@@ -35,6 +35,10 @@ dependencies:
 
   flutter_phoenix: ^0.1.0
 
+  flutter_spinkit: ^4.1.2+1
+
+  cached_network_image: ^2.2.0+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

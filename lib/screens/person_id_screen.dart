@@ -1,9 +1,10 @@
 import 'package:feedall/app_localizations.dart';
+import 'package:feedall/components/appbar.dart';
 import 'package:feedall/components/drawer.dart';
 import 'package:feedall/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class PersonIDScreen extends StatelessWidget {
   final TextEditingController _idController = TextEditingController();
 
   Widget _idPrompt(var context) {
@@ -21,7 +22,7 @@ class LoginScreen extends StatelessWidget {
           child: TextFormField(
             decoration: InputDecoration(
                 hintText:
-                    AppLocalizations.of(context).translate("enter_client_id"),
+                    AppLocalizations.of(context).translate("enter_person_id"),
                 hintStyle: TextStyle(color: light),
                 icon: Icon(
                   Icons.home,
@@ -45,11 +46,15 @@ class LoginScreen extends StatelessWidget {
 
   Widget _logoSection() {
     return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25.0), color: primary),
+        width: 200,
         margin: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 0.0),
         alignment: Alignment.topCenter,
-        child: Image.asset(
-          "images/logo.png",
-          width: 100.0,
+        child: Icon(
+          Icons.person,
+          size: 200,
+          color: background3,
         ));
   }
 
@@ -72,7 +77,7 @@ class LoginScreen extends StatelessWidget {
             // _signin();
           },
           child: Text(
-            AppLocalizations.of(context).translate("start_btn_text"),
+            AppLocalizations.of(context).translate("submit_btn_text"),
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
         ),
@@ -85,6 +90,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: background2,
       drawer: FeedAllDrawer(context),
+      appBar: FeeadAllAppBar(context, 'serve_customer'),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),

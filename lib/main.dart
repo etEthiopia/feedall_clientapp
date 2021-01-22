@@ -1,13 +1,20 @@
 import 'package:feedall/app_localizations.dart';
+import 'package:feedall/screens/account_balance_screen.dart';
+import 'package:feedall/screens/day_stat_screen.dart';
 import 'package:feedall/screens/login_screen.dart';
+import 'package:feedall/screens/nav_screen.dart';
+import 'package:feedall/screens/person_id_screen.dart';
+import 'package:feedall/screens/person_profile_screen.dart';
+import 'package:feedall/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 final storage = FlutterSecureStorage();
 
 void main() {
-  runApp(MyApp());
+  runApp(Phoenix(child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -48,12 +55,20 @@ class _MyAppState extends State<MyApp> {
         }
         return supportedLocales.first;
       },
+      routes: {
+        '/login': (context) => LoginScreen(),
+        '/person_id': (context) => PersonIDScreen(),
+        '/day_stat': (context) => DayStatScreen(),
+        '/account_balance': (context) => AccountBalanceScreen(),
+        '/settings': (context) => SettingsScreen(),
+        '/person_detail': (context) => PersonProfileScreen()
+      },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginScreen(),
+      home: NavScreen(),
     );
   }
 }
