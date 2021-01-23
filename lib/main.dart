@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedall/app_localizations.dart';
 import 'package:feedall/screens/account_balance_screen.dart';
 import 'package:feedall/screens/day_stat_screen.dart';
@@ -10,8 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 final storage = FlutterSecureStorage();
+
+FirebaseFirestore firestore = FirebaseFirestore.instance;
+CollectionReference clients = firestore.collection('clients');
+FirebaseApp app;
 
 void main() {
   runApp(Phoenix(child: MyApp()));
@@ -25,6 +31,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Locale locale;
 
+  void initFirebaseApp() async {
+    app = await Firebase.initializeApp();
+  }
+
   @override
   void initState() {
     AppLocalizations.getCurrentLang().then((locale) => {
@@ -32,6 +42,7 @@ class _MyAppState extends State<MyApp> {
             this.locale = locale;
           })
         });
+    initFirebaseApp();
     super.initState();
   }
 

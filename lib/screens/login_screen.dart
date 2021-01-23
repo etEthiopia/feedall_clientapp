@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedall/app_localizations.dart';
 import 'package:feedall/components/drawer.dart';
+import 'package:feedall/main.dart';
 import 'package:feedall/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -69,7 +71,7 @@ class LoginScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0),
         child: FlatButton(
           onPressed: () {
-            // _signin();
+            _firestoreClients();
           },
           child: Text(
             AppLocalizations.of(context).translate("start_btn_text"),
@@ -78,6 +80,15 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _firestoreClients() async {
+    clients
+        .where('client_id', isEqualTo: 'dave_mother_bet_6256935')
+        .get()
+        .then((querySnapshot) {
+      print(querySnapshot.docs[0].data());
+    }).catchError((error) => print("Failed to get CLIENT: $error"));
   }
 
   @override
@@ -99,7 +110,8 @@ class LoginScreen extends StatelessWidget {
                     _sizedBox(),
                     _idPrompt(context),
                     _sizedBox(),
-                    _submitBtn(context)
+                    _submitBtn(context),
+                    _sizedBox(),
                   ],
                 ))
               ],
