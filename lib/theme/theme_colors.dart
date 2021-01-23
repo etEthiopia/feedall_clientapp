@@ -8,10 +8,10 @@ Color background2 = Colors.grey[800];
 
 Color background3 = Colors.grey[900];
 
-Color dark = Color(0Xff2e520d);
+Color dark = Color(0Xff445930);
 
-Color light = Color(0xff73ed00);
+Color light = Color(0xff648246);
 
-Color primary = Color(0xff88c251);
+Color primary = Color(0xff536d3a);
 
 Color accent = Color(0xff544414);

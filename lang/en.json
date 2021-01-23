@@ -29,5 +29,6 @@
     "level": "Level",
     "cancel_btn_text": "CANCEL",
     "confirm_btn_text": "CONFIRM",
-    "empty_header": ""
+    "empty_header": "",
+    "login_error": "Couldn't Login"
 }

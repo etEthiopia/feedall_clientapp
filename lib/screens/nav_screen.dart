@@ -8,7 +8,7 @@ class NavScreen extends StatelessWidget {
       width: double.infinity,
       child: Material(
         elevation: 1,
-        shadowColor: light,
+        shadowColor: dark,
         color: light,
         borderRadius: BorderRadius.circular(15.0),
         child: FlatButton(

@@ -69,7 +69,7 @@ class PersonIDScreen extends StatelessWidget {
       width: double.infinity,
       child: Material(
         elevation: 1,
-        shadowColor: light,
+        shadowColor: dark,
         color: dark,
         borderRadius: BorderRadius.circular(15.0),
         child: FlatButton(

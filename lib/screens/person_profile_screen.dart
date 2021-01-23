@@ -59,7 +59,7 @@ class PersonProfileScreen extends StatelessWidget {
           borderRadius: BorderRadius.all(
             Radius.circular(15),
           ),
-          border: Border.all(color: dark, width: 5),
+          border: Border.all(color: accent, width: 5),
           image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
         ),
       ),
@@ -106,7 +106,7 @@ class PersonProfileScreen extends StatelessWidget {
       width: double.infinity,
       child: Material(
         elevation: 1,
-        shadowColor: light,
+        shadowColor: dark,
         color: light,
         borderRadius: BorderRadius.circular(15.0),
         child: FlatButton(
@@ -127,7 +127,7 @@ class PersonProfileScreen extends StatelessWidget {
       width: double.infinity,
       child: Material(
         elevation: 1,
-        shadowColor: light,
+        shadowColor: dark,
         color: dark,
         borderRadius: BorderRadius.circular(15.0),
         child: FlatButton(

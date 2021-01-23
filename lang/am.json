@@ -29,5 +29,6 @@
     "level": "ደረጃ",
     "cancel_btn_text": "ተመለስ",
     "confirm_btn_text": "አረጋግጥ",
-    "empty_header": ""
+    "empty_header": "",
+    "login_error": "መግባት አልተቻለም"
 }

@@ -1,4 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:feedall/components/show_error.dart';
+import 'package:feedall/components/loading.dart';
+import 'package:feedall/models/client.dart';
 import 'package:feedall/app_localizations.dart';
 import 'package:feedall/components/drawer.dart';
 import 'package:feedall/main.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _idController = TextEditingController();
+  bool loading = false;
 
   Widget _idPrompt(var context) {
     return Container(
@@ -66,12 +69,12 @@ class LoginScreen extends StatelessWidget {
       width: double.infinity,
       child: Material(
         elevation: 1,
-        shadowColor: light,
+        shadowColor: dark,
         color: dark,
         borderRadius: BorderRadius.circular(15.0),
         child: FlatButton(
           onPressed: () {
-            _firestoreClients();
+            _clientLogin(context);
           },
           child: Text(
             AppLocalizations.of(context).translate("start_btn_text"),
@@ -82,13 +85,27 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  _firestoreClients() async {
+  _clientLogin(var context) async {
+    loading = true;
     clients
         .where('client_id', isEqualTo: 'dave_mother_bet_6256935')
         .get()
         .then((querySnapshot) {
-      print(querySnapshot.docs[0].data());
-    }).catchError((error) => print("Failed to get CLIENT: $error"));
+      var clientdoc = querySnapshot.docs[0].data();
+      print(clientdoc);
+      Client.setClient(
+          name: clientdoc['name'],
+          clientId: clientdoc['client_id'],
+          location: clientdoc['location'],
+          paid: clientdoc['paid'],
+          unpaid: clientdoc['unpaid']);
+      loading = false;
+      Navigator.pushReplacementNamed(context, '/person_id');
+    }).catchError((error) {
+      loading = false;
+      print("Failed to get CLIENT: $error");
+      showError("login_error", context);
+    });
   }
 
   @override
@@ -96,25 +113,31 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: background2,
       drawer: FeedAllDrawer(context),
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
-          child: SingleChildScrollView(
-            reverse: true,
-            child: Column(
-              children: [
-                Form(
-                    child: Column(
-                  children: [
-                    _logoSection(),
-                    _sizedBox(),
-                    _idPrompt(context),
-                    _sizedBox(),
-                    _submitBtn(context),
-                    _sizedBox(),
-                  ],
-                ))
-              ],
+      body: Builder(
+        builder: (context) => SafeArea(
+          child: Container(
+            padding: EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
+            child: SingleChildScrollView(
+              reverse: true,
+              child: !loading
+                  ? Column(
+                      children: [
+                        Form(
+                            child: Column(
+                          children: [
+                            _logoSection(),
+                            _sizedBox(),
+                            _idPrompt(context),
+                            _sizedBox(),
+                            _submitBtn(context),
+                            _sizedBox(),
+                          ],
+                        ))
+                      ],
+                    )
+                  : Container(
+                      padding: EdgeInsets.only(top: 100),
+                      child: Center(child: Loading(context))),
             ),
           ),
         ),

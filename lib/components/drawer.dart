@@ -1,5 +1,6 @@
 import 'package:feedall/app_localizations.dart';
 import 'package:feedall/theme/theme_colors.dart';
+import 'package:feedall/models/client.dart';
 import 'package:flutter/material.dart';
 
 Widget FeedAllDrawer(var context) {
@@ -20,20 +21,21 @@ Widget FeedAllDrawer(var context) {
   }
 
   _logout() {
+    Client.client = Client();
     Navigator.pushReplacementNamed(context, '/login');
   }
 
   return Drawer(
     child: Container(
-      color: background,
+      color: background3,
       child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text("HM Mebeb Bet"),
-            accountEmail: Text("Feed All"),
+            accountName: Text(Client.client.name ?? 'Feed All'),
+            accountEmail: Text(Client.client.clientId ?? 'No Hunger'),
             currentAccountPicture: GestureDetector(
               child: CircleAvatar(
-                backgroundColor: background3,
+                backgroundColor: background1,
                 backgroundImage: AssetImage('images/logo.png'),
               ),
             ),
@@ -56,7 +58,8 @@ Widget FeedAllDrawer(var context) {
                   ),
                   Text(
                     AppLocalizations.of(context).translate("serve_customer"),
-                    style: TextStyle(fontWeight: FontWeight.bold, color: light),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, color: accent),
                   ),
                 ],
               ),
@@ -79,7 +82,8 @@ Widget FeedAllDrawer(var context) {
                   ),
                   Text(
                     AppLocalizations.of(context).translate("day_stat"),
-                    style: TextStyle(fontWeight: FontWeight.bold, color: light),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, color: accent),
                   ),
                 ],
               ),
@@ -102,7 +106,8 @@ Widget FeedAllDrawer(var context) {
                   ),
                   Text(
                     AppLocalizations.of(context).translate("account_balance"),
-                    style: TextStyle(fontWeight: FontWeight.bold, color: light),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, color: accent),
                   ),
                 ],
               ),
@@ -125,7 +130,8 @@ Widget FeedAllDrawer(var context) {
                   ),
                   Text(
                     AppLocalizations.of(context).translate("settings"),
-                    style: TextStyle(fontWeight: FontWeight.bold, color: light),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, color: accent),
                   ),
                 ],
               ),
@@ -151,7 +157,8 @@ Widget FeedAllDrawer(var context) {
                   ),
                   Text(
                     AppLocalizations.of(context).translate("logout"),
-                    style: TextStyle(fontWeight: FontWeight.bold, color: light),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, color: accent),
                   ),
                 ],
               ),
@@ -177,7 +184,8 @@ Widget FeedAllDrawer(var context) {
                   ),
                   Text(
                     "BACK TO NAVIGATION",
-                    style: TextStyle(fontWeight: FontWeight.bold, color: light),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, color: accent),
                   ),
                 ],
               ),

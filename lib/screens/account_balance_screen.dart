@@ -46,7 +46,7 @@ class AccountBalanceScreen extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 25,
-            backgroundColor: background1,
+            backgroundColor: Colors.white,
             child: Icon(
               Icons.money_off,
               color: primary,
@@ -58,14 +58,14 @@ class AccountBalanceScreen extends StatelessWidget {
           ),
           Text(
             AppLocalizations.of(context).translate("total_unpaid"),
-            style: TextStyle(color: background2, fontSize: 20),
+            style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           SizedBox(
             height: 5,
           ),
           Text(
             amount.toString() + " ETB",
-            style: TextStyle(color: background2, fontSize: 40),
+            style: TextStyle(color: Colors.white, fontSize: 40),
           ),
         ],
       ),

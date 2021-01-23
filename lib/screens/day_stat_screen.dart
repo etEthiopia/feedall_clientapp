@@ -17,7 +17,7 @@ class _DayStatScreenState extends State<DayStatScreen> {
     Icon icon = Icon(
       Icons.breakfast_dining,
       color: Colors.white,
-      size: 18,
+      size: 16,
     );
     switch (course) {
       case 2:
@@ -26,7 +26,7 @@ class _DayStatScreenState extends State<DayStatScreen> {
         icon = Icon(
           Icons.lunch_dining,
           color: Colors.white,
-          size: 18,
+          size: 16,
         );
         break;
       case 3:
@@ -35,7 +35,7 @@ class _DayStatScreenState extends State<DayStatScreen> {
         icon = Icon(
           Icons.dinner_dining,
           color: Colors.white,
-          size: 18,
+          size: 16,
         );
     }
     return Container(
@@ -68,7 +68,7 @@ class _DayStatScreenState extends State<DayStatScreen> {
               ),
               Text(
                 AppLocalizations.of(context).translate(coursename),
-                style: TextStyle(color: Colors.white, fontSize: 18),
+                style: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ],
           ),
@@ -101,7 +101,7 @@ class _DayStatScreenState extends State<DayStatScreen> {
         children: [
           Text(
             AppLocalizations.of(context).translate("total"),
-            style: TextStyle(color: Colors.white, fontSize: 25),
+            style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           SizedBox(
             height: 5,
@@ -163,6 +163,7 @@ class _DayStatScreenState extends State<DayStatScreen> {
                     reverse: true,
                     child: Column(
                       children: [
+                        _sizedBox(),
                         _foodCourse(context, 1, 507),
                         _sizedBox(),
                         _foodCourse(context, 2, 1259),
