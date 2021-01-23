@@ -1,15 +1,33 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedall/app_localizations.dart';
 import 'package:feedall/components/drawer.dart';
+import 'package:feedall/components/loading.dart';
+import 'package:feedall/components/show_error.dart';
+import 'package:feedall/main.dart';
+import 'package:feedall/models/client.dart';
 import 'package:feedall/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 
-class DayStatScreen extends StatefulWidget {
+class DayStatScreen extends StatelessWidget {
   @override
-  _DayStatScreenState createState() => _DayStatScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: DayStat(),
+    );
+  }
 }
 
-class _DayStatScreenState extends State<DayStatScreen> {
+class DayStat extends StatefulWidget {
+  @override
+  _DayStatState createState() => _DayStatState();
+}
+
+class _DayStatState extends State<DayStat> {
   DateTime selectedDate = DateTime.now();
+  bool loading = false;
+  int lunch = 0;
+  int dinner = 0;
+  int breakfast = 0;
 
   Widget _foodCourse(var context, int course, int amount) {
     Color bgcolor = light;
@@ -127,12 +145,67 @@ class _DayStatScreenState extends State<DayStatScreen> {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate)
+        firstDate: DateTime(2020, 8),
+        lastDate: DateTime.now());
+    if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
       });
+      _getPlateData(context: context, load: true);
+    }
+  }
+
+  _getPlateData({var context, bool load = false}) async {
+    if (load) {
+      setState(() {
+        loading = true;
+        breakfast = 0;
+        lunch = 0;
+        dinner = 0;
+      });
+    }
+    plates
+        .where('client', isEqualTo: Client.client.clientId)
+        .get()
+        .then((querySnapshot) {
+      for (QueryDocumentSnapshot qds in querySnapshot.docs) {
+        Timestamp timestamp = qds.data()['timestamp'];
+        print(
+            "DATE ${DateTime.fromMillisecondsSinceEpoch(timestamp.seconds * 1000)}");
+        if (DateTime.fromMillisecondsSinceEpoch(timestamp.seconds * 1000)
+                .toString()
+                .substring(0, 10) ==
+            selectedDate.toString().substring(0, 10)) {
+          switch (qds.data()['type']) {
+            case 1:
+              breakfast += 1;
+              break;
+            case 2:
+              lunch += 1;
+              break;
+            case 3:
+              dinner += 1;
+              break;
+          }
+        }
+      }
+
+      setState(() {
+        loading = false;
+      });
+    }).catchError((error) {
+      setState(() {
+        loading = false;
+      });
+      print("Failed to get CLIENT: $error");
+      showError("failed_to_update", context);
+    });
+  }
+
+  @override
+  void initState() {
+    _getPlateData(context: context, load: true);
+    super.initState();
   }
 
   @override
@@ -158,21 +231,26 @@ class _DayStatScreenState extends State<DayStatScreen> {
         backgroundColor: background2,
         body: SafeArea(
             child: Container(
-                padding: EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
                 child: SingleChildScrollView(
-                    reverse: true,
-                    child: Column(
-                      children: [
-                        _sizedBox(),
-                        _foodCourse(context, 1, 507),
-                        _sizedBox(),
-                        _foodCourse(context, 2, 1259),
-                        _sizedBox(),
-                        _foodCourse(context, 3, 910),
-                        _sizedBox(),
-                        _sizedBox(),
-                        _total(context, 2756)
-                      ],
-                    )))));
+                  reverse: true,
+                  child: !loading
+                      ? Column(
+                          children: [
+                            _sizedBox(),
+                            _foodCourse(context, 1, breakfast),
+                            _sizedBox(),
+                            _foodCourse(context, 2, lunch),
+                            _sizedBox(),
+                            _foodCourse(context, 3, dinner),
+                            _sizedBox(),
+                            _sizedBox(),
+                            _total(context, breakfast + lunch + dinner)
+                          ],
+                        )
+                      : Container(
+                          padding: EdgeInsets.only(top: 100),
+                          child: Center(child: Loading(context))),
+                ))));
   }
 }

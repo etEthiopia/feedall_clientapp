@@ -58,8 +58,8 @@ Widget FeedAllDrawer(var context) {
                   ),
                   Text(
                     AppLocalizations.of(context).translate("serve_customer"),
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, color: accent),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.amber[50]),
                   ),
                 ],
               ),
@@ -83,7 +83,7 @@ Widget FeedAllDrawer(var context) {
                   Text(
                     AppLocalizations.of(context).translate("day_stat"),
                     style:
-                        TextStyle(fontWeight: FontWeight.bold, color: accent),
+                        TextStyle(fontWeight: FontWeight.bold, color: Colors.amber[50]),
                   ),
                 ],
               ),
@@ -107,7 +107,7 @@ Widget FeedAllDrawer(var context) {
                   Text(
                     AppLocalizations.of(context).translate("account_balance"),
                     style:
-                        TextStyle(fontWeight: FontWeight.bold, color: accent),
+                        TextStyle(fontWeight: FontWeight.bold, color: Colors.amber[50]),
                   ),
                 ],
               ),
@@ -131,7 +131,7 @@ Widget FeedAllDrawer(var context) {
                   Text(
                     AppLocalizations.of(context).translate("settings"),
                     style:
-                        TextStyle(fontWeight: FontWeight.bold, color: accent),
+                        TextStyle(fontWeight: FontWeight.bold, color: Colors.amber[50]),
                   ),
                 ],
               ),
@@ -158,7 +158,7 @@ Widget FeedAllDrawer(var context) {
                   Text(
                     AppLocalizations.of(context).translate("logout"),
                     style:
-                        TextStyle(fontWeight: FontWeight.bold, color: accent),
+                        TextStyle(fontWeight: FontWeight.bold, color: Colors.amber[50]),
                   ),
                 ],
               ),
@@ -185,7 +185,7 @@ Widget FeedAllDrawer(var context) {
                   Text(
                     "BACK TO NAVIGATION",
                     style:
-                        TextStyle(fontWeight: FontWeight.bold, color: accent),
+                        TextStyle(fontWeight: FontWeight.bold, color: Colors.amber[50]),
                   ),
                 ],
               ),

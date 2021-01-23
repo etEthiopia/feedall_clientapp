@@ -17,6 +17,7 @@ final storage = FlutterSecureStorage();
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 CollectionReference clients = firestore.collection('clients');
+CollectionReference plates = firestore.collection('plates');
 FirebaseApp app;
 
 void main() {

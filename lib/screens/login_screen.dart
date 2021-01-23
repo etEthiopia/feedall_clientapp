@@ -7,8 +7,15 @@ import 'package:feedall/main.dart';
 import 'package:feedall/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _idController = TextEditingController();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   bool loading = false;
 
   Widget _idPrompt(var context) {
@@ -86,23 +93,29 @@ class LoginScreen extends StatelessWidget {
   }
 
   _clientLogin(var context) async {
-    loading = true;
+    setState(() {
+      loading = true;
+    });
+
     clients
         .where('client_id', isEqualTo: 'dave_mother_bet_6256935')
         .get()
         .then((querySnapshot) {
       var clientdoc = querySnapshot.docs[0].data();
-      print(clientdoc);
       Client.setClient(
           name: clientdoc['name'],
           clientId: clientdoc['client_id'],
           location: clientdoc['location'],
           paid: clientdoc['paid'],
           unpaid: clientdoc['unpaid']);
-      loading = false;
+      setState(() {
+        loading = false;
+      });
       Navigator.pushReplacementNamed(context, '/person_id');
     }).catchError((error) {
-      loading = false;
+      setState(() {
+        loading = false;
+      });
       print("Failed to get CLIENT: $error");
       showError("login_error", context);
     });
@@ -111,6 +124,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: background2,
       drawer: FeedAllDrawer(context),
       body: Builder(

@@ -1,10 +1,30 @@
 import 'package:feedall/app_localizations.dart';
 import 'package:feedall/components/appbar.dart';
 import 'package:feedall/components/drawer.dart';
+import 'package:feedall/components/loading.dart';
+import 'package:feedall/components/show_error.dart';
+import 'package:feedall/main.dart';
+import 'package:feedall/models/client.dart';
 import 'package:feedall/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class AccountBalanceScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: AccountBalance(),
+    );
+  }
+}
+
+class AccountBalance extends StatefulWidget {
+  @override
+  _AccountBalanceState createState() => _AccountBalanceState();
+}
+
+class _AccountBalanceState extends State<AccountBalance> {
+  bool loading = false;
+
   Widget _clientName(String name) {
     return Container(
       width: double.infinity,
@@ -129,25 +149,82 @@ class AccountBalanceScreen extends StatelessWidget {
     );
   }
 
+  _getMoneyData({var context, bool load = false}) async {
+    if (load) {
+      setState(() {
+        loading = true;
+      });
+    }
+    clients
+        .where('client_id', isEqualTo: Client.client.clientId)
+        .get()
+        .then((querySnapshot) {
+      var clientdoc = querySnapshot.docs[0].data();
+      Client.client.paid = clientdoc['paid'];
+      Client.client.unpaid = clientdoc['unpaid'];
+      setState(() {
+        loading = false;
+      });
+    }).catchError((error) {
+      setState(() {
+        loading = false;
+      });
+      print("Failed to get CLIENT: $error");
+      showError("failed_to_update", context);
+    });
+  }
+
+  @override
+  void initState() {
+    _getMoneyData(context: context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: background2,
-        drawer: FeedAllDrawer(context),
-        appBar: FeeadAllAppBar(context, 'account_balance'),
-        body: SafeArea(
-            child: Container(
-                padding: EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
-                child: SingleChildScrollView(
-                    reverse: true,
-                    child: Column(
-                      children: [
-                        _clientName("HM Megeb Bet"),
-                        _sizedBox(),
-                        _unpaidBalance(context, 3405),
-                        _sSizedBox(),
-                        _paidBalance(context, 10510),
-                      ],
+    return Builder(
+        builder: (context) => Scaffold(
+            backgroundColor: background2,
+            drawer: FeedAllDrawer(context),
+            appBar: AppBar(
+              title: Text(
+                AppLocalizations.of(context).translate("account_balance"),
+              ),
+              actions: [
+                InkWell(
+                  onTap: () {
+                    _getMoneyData(context: context, load: true);
+                  },
+                  child: Container(
+                    child: Icon(
+                      Icons.refresh,
+                      color: Colors.white,
+                    ),
+                    padding: EdgeInsets.only(right: 10),
+                  ),
+                )
+              ],
+              backgroundColor: dark,
+            ),
+            body: SafeArea(
+                child: Container(
+                    padding:
+                        EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+                    child: SingleChildScrollView(
+                      reverse: true,
+                      child: !loading
+                          ? Column(
+                              children: [
+                                _clientName(Client.client.name),
+                                _sizedBox(),
+                                _unpaidBalance(context, Client.client.unpaid),
+                                _sSizedBox(),
+                                _paidBalance(context, Client.client.paid),
+                              ],
+                            )
+                          : Container(
+                              padding: EdgeInsets.only(top: 100),
+                              child: Center(child: Loading(context))),
                     )))));
   }
 }

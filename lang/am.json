@@ -30,5 +30,6 @@
     "cancel_btn_text": "ተመለስ",
     "confirm_btn_text": "አረጋግጥ",
     "empty_header": "",
-    "login_error": "መግባት አልተቻለም"
+    "login_error": "መግባት አልተቻለም",
+    "failed_to_update": "አዲስ ማስተካከያ አልተደረገም"
 }

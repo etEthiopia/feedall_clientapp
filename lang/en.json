@@ -30,5 +30,6 @@
     "cancel_btn_text": "CANCEL",
     "confirm_btn_text": "CONFIRM",
     "empty_header": "",
-    "login_error": "Couldn't Login"
+    "login_error": "Couldn't Login",
+    "failed_to_update": "Failed to Update"
 }
