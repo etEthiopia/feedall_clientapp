@@ -1,17 +1,28 @@
 import 'package:feedall/app_localizations.dart';
 import 'package:feedall/components/appbar.dart';
 import 'package:feedall/components/drawer.dart';
+import 'package:feedall/components/show_error.dart';
+import 'package:feedall/screens/person_profile_screen.dart';
 import 'package:feedall/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class PersonIDScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Person(),
+    );
+  }
+}
+
+class Person extends StatelessWidget {
   final TextEditingController _idController = TextEditingController();
 
   Widget _idPrompt(var context) {
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Material(
-        color: background2.withOpacity(0.8),
+        color: background2,
         elevation: 0.0,
         child: Container(
           decoration: BoxDecoration(
@@ -20,7 +31,9 @@ class PersonIDScreen extends StatelessWidget {
                   color: primary, width: 2, style: BorderStyle.solid)),
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
           child: TextFormField(
+            style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
+                fillColor: Colors.white,
                 hintText:
                     AppLocalizations.of(context).translate("enter_person_id"),
                 hintStyle: TextStyle(color: light),
@@ -74,7 +87,16 @@ class PersonIDScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0),
         child: FlatButton(
           onPressed: () {
-            // _signin();
+            int pid = 0;
+            try {
+              pid = int.parse(_idController.text);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => PersonProfileScreen(
+                        personid: pid,
+                      )));
+            } catch (e) {
+              showError('invalid_id', context);
+            }
           },
           child: Text(
             AppLocalizations.of(context).translate("submit_btn_text"),
@@ -88,31 +110,32 @@ class PersonIDScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: background2,
-      drawer: FeedAllDrawer(context),
-      appBar: FeeadAllAppBar(context, 'serve_customer'),
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
-          child: SingleChildScrollView(
-            reverse: true,
-            child: Column(
-              children: [
-                Form(
-                    child: Column(
+        backgroundColor: background2,
+        drawer: FeedAllDrawer(context),
+        appBar: FeeadAllAppBar(context, 'serve_customer'),
+        body: Builder(
+          builder: (context) => SafeArea(
+            child: Container(
+              padding: EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
+              child: SingleChildScrollView(
+                reverse: true,
+                child: Column(
                   children: [
-                    _logoSection(),
-                    _sizedBox(),
-                    _idPrompt(context),
-                    _sizedBox(),
-                    _submitBtn(context)
+                    Form(
+                        child: Column(
+                      children: [
+                        _logoSection(),
+                        _sizedBox(),
+                        _idPrompt(context),
+                        _sizedBox(),
+                        _submitBtn(context)
+                      ],
+                    ))
                   ],
-                ))
-              ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

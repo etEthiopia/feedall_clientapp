@@ -18,6 +18,7 @@ final storage = FlutterSecureStorage();
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 CollectionReference clients = firestore.collection('clients');
 CollectionReference plates = firestore.collection('plates');
+CollectionReference people = firestore.collection('people');
 FirebaseApp app;
 
 void main() {
@@ -73,7 +74,8 @@ class _MyAppState extends State<MyApp> {
         '/day_stat': (context) => DayStatScreen(),
         '/account_balance': (context) => AccountBalanceScreen(),
         '/settings': (context) => SettingsScreen(),
-        '/person_detail': (context) => PersonProfileScreen()
+        '/person_detail': (context) => PersonProfileScreen(),
+        '/navigation': (context) => NavScreen(),
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

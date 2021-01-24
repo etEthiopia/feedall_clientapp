@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Material(
-        color: background2.withOpacity(0.8),
+        color: background2,
         elevation: 0.0,
         child: Container(
           decoration: BoxDecoration(
@@ -31,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: primary, width: 2, style: BorderStyle.solid)),
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
           child: TextFormField(
+            style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 hintText:
                     AppLocalizations.of(context).translate("enter_client_id"),
@@ -77,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Material(
         elevation: 1,
         shadowColor: dark,
-        color: dark,
+        color: primary,
         borderRadius: BorderRadius.circular(15.0),
         child: FlatButton(
           onPressed: () {

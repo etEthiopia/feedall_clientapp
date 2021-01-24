@@ -31,5 +31,8 @@
     "confirm_btn_text": "CONFIRM",
     "empty_header": "",
     "login_error": "Couldn't Login",
-    "failed_to_update": "Failed to Update"
+    "failed_to_update": "Failed to Update",
+    "invalid_id": "Invalid ID",
+    "person_not_found": "Person Not Found",
+    "error_happened": "Couldn't get the data, Please Try Again"
 }

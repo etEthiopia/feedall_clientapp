@@ -82,8 +82,8 @@ Widget FeedAllDrawer(var context) {
                   ),
                   Text(
                     AppLocalizations.of(context).translate("day_stat"),
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, color: Colors.amber[50]),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.amber[50]),
                   ),
                 ],
               ),
@@ -106,8 +106,8 @@ Widget FeedAllDrawer(var context) {
                   ),
                   Text(
                     AppLocalizations.of(context).translate("account_balance"),
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, color: Colors.amber[50]),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.amber[50]),
                   ),
                 ],
               ),
@@ -130,8 +130,8 @@ Widget FeedAllDrawer(var context) {
                   ),
                   Text(
                     AppLocalizations.of(context).translate("settings"),
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, color: Colors.amber[50]),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.amber[50]),
                   ),
                 ],
               ),
@@ -157,8 +157,8 @@ Widget FeedAllDrawer(var context) {
                   ),
                   Text(
                     AppLocalizations.of(context).translate("logout"),
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, color: Colors.amber[50]),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.amber[50]),
                   ),
                 ],
               ),
@@ -169,7 +169,7 @@ Widget FeedAllDrawer(var context) {
           ),
           InkWell(
             onTap: () {
-              Navigator.pushReplacementNamed(context, '/');
+              Navigator.pushReplacementNamed(context, '/navigation');
             },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -184,8 +184,8 @@ Widget FeedAllDrawer(var context) {
                   ),
                   Text(
                     "BACK TO NAVIGATION",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, color: Colors.amber[50]),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.amber[50]),
                   ),
                 ],
               ),

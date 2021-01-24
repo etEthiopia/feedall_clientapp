@@ -31,5 +31,8 @@
     "confirm_btn_text": "አረጋግጥ",
     "empty_header": "",
     "login_error": "መግባት አልተቻለም",
-    "failed_to_update": "አዲስ ማስተካከያ አልተደረገም"
+    "failed_to_update": "አዲስ ማስተካከያ አልተደረገም",
+    "invalid_id": "የማይሰራ መታወቂያ",
+    "person_not_found": "ደንበኛው አልተገኝም",
+    "error_happened": "ዳታ ማግኘት አልተቻለም፣ ድጋሚ ይሞክሩ"
 }
