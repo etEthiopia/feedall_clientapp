@@ -129,7 +129,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: background2,
-      drawer: FeedAllDrawer(context),
       body: Builder(
         builder: (context) => SafeArea(
           child: Container(
