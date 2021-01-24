@@ -167,30 +167,30 @@ Widget FeedAllDrawer(var context) {
           SizedBox(
             height: 50,
           ),
-          InkWell(
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/navigation');
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.navigate_before,
-                    color: primary,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    "BACK TO NAVIGATION",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.amber[50]),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.pushReplacementNamed(context, '/navigation');
+          //   },
+          //   child: Container(
+          //     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          //     child: Row(
+          //       children: <Widget>[
+          //         Icon(
+          //           Icons.navigate_before,
+          //           color: primary,
+          //         ),
+          //         SizedBox(
+          //           width: 20,
+          //         ),
+          //         Text(
+          //           "BACK TO NAVIGATION",
+          //           style: TextStyle(
+          //               fontWeight: FontWeight.bold, color: Colors.amber[50]),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     ),

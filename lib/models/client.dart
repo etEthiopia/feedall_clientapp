@@ -1,5 +1,6 @@
 class Client {
   String clientId;
+  String fid;
   String name;
   String location;
   int unpaid;
@@ -9,7 +10,8 @@ class Client {
   int dinner;
   static Client client = Client();
 
-  static setClient({clientId, name, location, paid, unpaid}) {
+  static setClient({fid, clientId, name, location, paid, unpaid}) {
+    client.fid = fid;
     client.clientId = clientId;
     client.name = name;
     client.location = location;

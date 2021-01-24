@@ -4,7 +4,9 @@ import 'package:feedall/app_localizations.dart';
 import 'package:feedall/components/appbar.dart';
 import 'package:feedall/components/loading.dart';
 import 'package:feedall/components/show_error.dart';
+import 'package:feedall/components/show_success.dart';
 import 'package:feedall/main.dart';
+import 'package:feedall/models/client.dart';
 import 'package:feedall/models/person.dart';
 import 'package:feedall/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
@@ -166,7 +168,7 @@ class _PersonProfileState extends State<PersonProfile> {
         borderRadius: BorderRadius.circular(15.0),
         child: FlatButton(
           onPressed: () {
-            // _signin();
+            _servePerson(context: context, load: true);
           },
           child: Text(
             AppLocalizations.of(context).translate("confirm_btn_text"),
@@ -264,6 +266,64 @@ class _PersonProfileState extends State<PersonProfile> {
         });
         showError(errormessage, context);
       }
+    });
+  }
+
+  _servePerson({var context, bool load = false}) async {
+    if (load) {
+      setState(() {
+        loading = true;
+      });
+    }
+    int meal = 0;
+    DateTime mealtimedate = DateTime.now();
+    if (mealtimedate.hour < 11) {
+      meal = 1;
+    } else if (mealtimedate.hour < 17) {
+      meal = 2;
+    } else if (mealtimedate.hour < 24) {
+      meal = 3;
+    }
+    int price = 0;
+    switch (meal) {
+      case 1:
+        price = 15;
+        break;
+      case 2:
+        price = 25;
+        break;
+      case 3:
+        price = 20;
+        break;
+    }
+
+    plates.doc().set({
+      "person": this.personToFeed.personId,
+      "client": Client.client.clientId,
+      "timestamp": Timestamp.now(),
+      "type": meal
+    }).then((value) {
+      clients
+          .doc(Client.client.fid)
+          .update({"unpaid": Client.client.unpaid + price}).then((value) {
+        Client.client.unpaid += price;
+        showSucess('person_served', context);
+        setState(() {
+          loading = false;
+        });
+      }).catchError((error) {
+        print("Failed to feed CLIENT: $error");
+        setState(() {
+          errormessage = "error_happened";
+        });
+        showError(errormessage, context);
+      });
+    }).catchError((error) {
+      print("Failed to feed CLIENT: $error");
+      setState(() {
+        errormessage = "error_happened";
+      });
+      showError(errormessage, context);
     });
   }
 

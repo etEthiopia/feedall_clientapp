@@ -99,11 +99,12 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     clients
-        .where('client_id', isEqualTo: 'dave_mother_bet_6256935')
+        .where('client_id', isEqualTo: _idController.text)
         .get()
         .then((querySnapshot) {
       var clientdoc = querySnapshot.docs[0].data();
       Client.setClient(
+          fid: querySnapshot.docs[0].id,
           name: clientdoc['name'],
           clientId: clientdoc['client_id'],
           location: clientdoc['location'],
@@ -112,7 +113,8 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         loading = false;
       });
-      Navigator.pushReplacementNamed(context, '/person_id');
+
+      Navigator.pushReplacementNamed(context, '/day_stat');
     }).catchError((error) {
       setState(() {
         loading = false;
@@ -131,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Builder(
         builder: (context) => SafeArea(
           child: Container(
-            padding: EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
+            padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
             child: SingleChildScrollView(
               reverse: true,
               child: !loading

@@ -35,5 +35,6 @@
     "invalid_id": "የማይሰራ መታወቂያ",
     "person_not_found": "ደንበኛው አልተገኝም",
     "error_happened": "ዳታ ማግኘት አልተቻለም፣ ድጋሚ ይሞክሩ",
-    "person_was_served": "ደንበኛው ተስተናግዷል" 
+    "person_was_served": "ደንበኛው ተስተናግዷል" ,
+    "person_served": "ሰሀን ተመዝግቧል"
 }
