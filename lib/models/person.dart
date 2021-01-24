@@ -4,6 +4,13 @@ class Person {
   String picture;
   bool valid;
   String name;
+  int creditscore;
 
-  Person({this.personId, this.name, this.level, this.picture, this.valid});
+  Person(
+      {this.personId,
+      this.name,
+      this.level,
+      this.picture,
+      this.creditscore,
+      this.valid});
 }

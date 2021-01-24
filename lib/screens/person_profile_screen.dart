@@ -131,6 +131,26 @@ class _PersonProfileState extends State<PersonProfile> {
     );
   }
 
+  Widget _creditscore(var context, int creditscore) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "${AppLocalizations.of(context).translate('creditscore')}",
+          style: TextStyle(color: light, fontSize: 20),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Text(
+          " ${creditscore.toString()}",
+          style: TextStyle(
+              color: light, fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+      ],
+    );
+  }
+
   Widget _sizedBox() {
     return SizedBox(
       height: 20.0,
@@ -231,6 +251,7 @@ class _PersonProfileState extends State<PersonProfile> {
                 personId: persondoc['person_id'],
                 picture: persondoc['picture'],
                 name: persondoc['name'],
+                creditscore: persondoc['creditscore'],
                 valid: true);
             loading = false;
           });
@@ -361,6 +382,11 @@ class _PersonProfileState extends State<PersonProfile> {
                               _sizedBox(),
                               this.personToFeed != null
                                   ? _level(context, this.personToFeed.level)
+                                  : SizedBox(height: 0),
+                              _sizedBox(),
+                              this.personToFeed != null
+                                  ? _creditscore(
+                                      context, this.personToFeed.creditscore)
                                   : SizedBox(height: 0),
                               _sizedBox(),
                               _sizedBox(),

@@ -36,5 +36,6 @@
     "person_not_found": "Person Not Found",
     "error_happened": "Couldn't get the data, Please Try Again",
     "person_was_served": "Person was Served",
-    "person_served": "Plate Registered"
+    "person_served": "Plate Registered",
+    "creditscore": "Credit Score"
 }
