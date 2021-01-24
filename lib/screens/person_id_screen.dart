@@ -62,7 +62,7 @@ class Person extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25.0), color: primary),
         width: 200,
-        margin: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 0.0),
+        margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
         alignment: Alignment.topCenter,
         child: Icon(
           Icons.person,
@@ -116,7 +116,7 @@ class Person extends StatelessWidget {
         body: Builder(
           builder: (context) => SafeArea(
             child: Container(
-              padding: EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
+              padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
               child: SingleChildScrollView(
                 reverse: true,
                 child: Column(

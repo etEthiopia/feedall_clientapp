@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedall/app_localizations.dart';
 import 'package:feedall/components/appbar.dart';
-import 'package:feedall/components/drawer.dart';
 import 'package:feedall/components/loading.dart';
 import 'package:feedall/components/show_error.dart';
 import 'package:feedall/main.dart';
@@ -27,6 +27,7 @@ class PersonProfileScreen extends StatelessWidget {
 class PersonProfile extends StatefulWidget {
   PersonProfile({this.personid});
   final int personid;
+
   @override
   _PersonProfileState createState() =>
       _PersonProfileState(personid: this.personid);
@@ -37,6 +38,7 @@ class _PersonProfileState extends State<PersonProfile> {
   final int personid;
   Person personToFeed;
   bool loading;
+  String errormessage;
   final TextEditingController _idController = TextEditingController();
 
   Widget _imagePlaceholder() {
@@ -186,15 +188,64 @@ class _PersonProfileState extends State<PersonProfile> {
         .get()
         .then((querySnapshot) {
       var persondoc = querySnapshot.docs[0].data();
+      int meal = 0;
+      DateTime mealtimedate = DateTime.now();
+      if (mealtimedate.hour < 11) {
+        meal = 1;
+      } else if (mealtimedate.hour < 17) {
+        meal = 2;
+      } else if (mealtimedate.hour < 24) {
+        meal = 3;
+      }
+      plates
+          .where('person', isEqualTo: this.personid.toString())
+          .get()
+          .then((querySnapshot) {
+        bool platefoundornot = false;
+        for (QueryDocumentSnapshot qds in querySnapshot.docs) {
+          Timestamp timestamp = qds.data()['timestamp'];
+          print(
+              "DATE ${DateTime.fromMillisecondsSinceEpoch(timestamp.seconds * 1000)}");
+          if (DateTime.fromMillisecondsSinceEpoch(timestamp.seconds * 1000)
+                  .toString()
+                  .substring(0, 10) ==
+              mealtimedate.toString().substring(0, 10)) {
+            if (qds.data()['type'] == meal) {
+              platefoundornot = true;
+              break;
+            }
+          }
+        }
+        if (platefoundornot) {
+          print("Person has been served");
+          setState(() {
+            errormessage = "person_was_served";
+          });
+          showError(errormessage, context);
+        } else {
+          setState(() {
+            personToFeed = Person(
+                level: persondoc['level'],
+                personId: persondoc['person_id'],
+                picture: persondoc['picture'],
+                name: persondoc['name'],
+                valid: true);
+            loading = false;
+          });
+        }
 
-      setState(() {
-        personToFeed = Person(
-            level: persondoc['level'],
-            personId: persondoc['person_id'],
-            picture: persondoc['picture'],
-            name: persondoc['name'],
-            valid: true);
-        loading = false;
+        setState(() {
+          loading = false;
+        });
+      }).catchError((error) {
+        setState(() {
+          loading = false;
+        });
+        print("Failed to get CLIENT: $error");
+        setState(() {
+          errormessage = "failed_to_update";
+        });
+        showError(errormessage, context);
       });
     }).catchError((error) {
       setState(() {
@@ -203,9 +254,15 @@ class _PersonProfileState extends State<PersonProfile> {
       print("Failed to get CLIENT: $error");
       if (error.toString().trim() ==
           "RangeError (index): Invalid value: Valid value range is empty: 0") {
-        showError("person_not_found", context);
+        setState(() {
+          errormessage = "person_not_found";
+        });
+        showError(errormessage, context);
       } else {
-        showError("error_happened", context);
+        setState(() {
+          errormessage = "error_happened";
+        });
+        showError(errormessage, context);
       }
     });
   }
@@ -240,7 +297,7 @@ class _PersonProfileState extends State<PersonProfile> {
                               this.personToFeed != null
                                   ? _name(this.personToFeed.name)
                                   : _name(AppLocalizations.of(context)
-                                      .translate('person_not_found')),
+                                      .translate(errormessage)),
                               _sizedBox(),
                               this.personToFeed != null
                                   ? _level(context, this.personToFeed.level)
